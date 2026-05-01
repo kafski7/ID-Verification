@@ -23,16 +23,16 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 2 — Database & Models
 
-- [ ] Create migration: `admin_users` table
-- [ ] Create migration: `staff` table (uuid, staff_id, full_name, position, job_grade, department, phone, email, photo_path, date_of_issue, card_expires, status)
-- [ ] Create migration: `qr_tokens` table (staff_uuid, nonce, issued_at, expires_at, revoked, revoked_at, revoked_by)
-- [ ] Create migration: `scan_logs` table (token_nonce, staff_uuid, scanned_at, ip_address, user_agent, result)
-- [ ] Create Eloquent model: `Staff` (with UUID generation on creating, relationships to tokens)
-- [ ] Create Eloquent model: `QrToken` (relationship to Staff)
-- [ ] Create Eloquent model: `ScanLog`
-- [ ] Create Eloquent model: `AdminUser` (extends Authenticatable, RBAC role field)
-- [ ] Write database seeders: at least one Super Admin user and sample staff records for dev testing
-- [ ] Run `php artisan migrate --seed` inside Docker and confirm tables are created
+- [x] Create migration: `admin_users` table
+- [x] Create migration: `staff` table (uuid PK, staff_id, full_name, position, job_grade, department, phone, email, photo_path, date_of_issue, card_expires, status)
+- [x] Create migration: `qr_tokens` table (staff_uuid FK, nonce, issued_at, expires_at, revoked, revoked_at, revoked_by FK)
+- [x] Create migration: `scan_logs` table (token_nonce, staff_uuid, scanned_at, ip_address, user_agent, result)
+- [x] Create Eloquent model: `Staff` (UUID PK, boot-generated uuid, relationships to QrToken/ScanLog)
+- [x] Create Eloquent model: `QrToken` (belongs to Staff, belongs to AdminUser, `isValid()` helper)
+- [x] Create Eloquent model: `ScanLog` (no timestamps, belongs to Staff)
+- [x] Create Eloquent model: `AdminUser` (extends Authenticatable, role enum, `isSuperAdmin()`/`isHrAdmin()`)
+- [x] Write database seeders: `AdminUserSeeder` (SUPER_ADMIN + HR_ADMIN), `StaffSeeder` (3 sample staff)
+- [x] Run `php artisan migrate --seed` — all 7 tables created, seeds successful
 
 ---
 
