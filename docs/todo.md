@@ -124,17 +124,18 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 9 — JSON API Endpoint
 
-- [ ] Register API route: `GET /api/v1/verify?token=...`
-- [ ] Reuse `QrTokenService::verify()` logic
-- [ ] Return structured JSON response with appropriate HTTP status codes:
-  - `200` — valid staff data
-  - `400` — malformed token
+- [x] Register API route: `GET /api/v1/verify?token=...`
+- [x] Reuse `QrTokenService::verify()` logic
+- [x] Return structured JSON response with appropriate HTTP status codes:
+  - `200` — valid staff data (staff_id, id_no, full_name, sex, position, job_grade, department, status, date_of_issue, card_expires, other_contacts, optional photo data URI)
+  - `400` — malformed / missing token
   - `403` — invalid signature
   - `404` — staff not found
   - `410` — token revoked
-- [ ] Log scan to `scan_logs` same as HTML endpoint
-- [ ] Add API rate limiting via Laravel rate limiter (backed by Redis)
-- [ ] Test with curl / Postman
+  - `422` — other invalid states (expired, inactive)
+  - `429` — rate limit exceeded
+- [x] Log scan to `scan_logs` same as HTML endpoint
+- [x] Add API rate limiting via Laravel rate limiter — 30 req/min per IP, backed by Redis cache driver
 
 ---
 
