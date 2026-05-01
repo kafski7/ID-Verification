@@ -235,6 +235,12 @@
                     <span class="detail-value">{{ $staff->id_no }}</span>
                 </div>
                 @endif
+                @if($staff->sex)
+                <div class="detail-row">
+                    <span class="detail-label">Sex</span>
+                    <span class="detail-value">{{ $staff->sex === 'M' ? 'Male' : 'Female' }}</span>
+                </div>
+                @endif
                 <div class="detail-row">
                     <span class="detail-label">Position</span>
                     <span class="detail-value">{{ $staff->position }}</span>

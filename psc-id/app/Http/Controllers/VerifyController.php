@@ -20,12 +20,6 @@ class VerifyController extends Controller
         $valid        = $result['valid'];
         $reason       = $result['reason'] ?? '';
 
-        // Determine status label for display
-        if ($valid && $staff?->status === 'INACTIVE') {
-            $valid  = false;
-            $reason = 'Staff member is no longer active.';
-        }
-
         // Log every scan attempt
         ScanLog::create([
             'token_nonce' => $qrToken?->nonce ?? substr($token, 0, 64),
@@ -36,9 +30,9 @@ class VerifyController extends Controller
             'result'      => $valid ? 'VALID' : 'INVALID',
         ]);
 
-        // Build staff photo data URI when valid (private disk, no direct URL)
+        // Build staff photo data URI whenever a staff record is found (not just for valid tokens)
         $photoDataUri = null;
-        if ($valid && $staff?->photo_path && Storage::disk('private')->exists($staff->photo_path)) {
+        if ($staff?->photo_path && Storage::disk('private')->exists($staff->photo_path)) {
             $bytes    = Storage::disk('private')->get($staff->photo_path);
             $mime     = Storage::disk('private')->mimeType($staff->photo_path) ?: 'image/jpeg';
             $photoDataUri = 'data:' . $mime . ';base64,' . base64_encode($bytes);
