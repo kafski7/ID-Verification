@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>PSC ID Card</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            width: 340px;
+            height: 540px;
+            background: url(card-bg.png) no-repeat cover;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .card-content {
+            position: relative;
+            height: 100%;
+            background-image: url('card-bg.png');
+            background-size: cover;
+            background-position: center;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 35px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logo {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .badge {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin-left: 3px;
+        }
+
+        .badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-container {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 5px solid #0066cc;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #f0f0f0;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .details {
+            width: 60%;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+            min-width: 70px;
+        }
+
+        .detail-value {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* Back side styles */
+        .back-content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .back-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            margin-top: 25px;
+        }
+
+        .terms-text {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .office-details {
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .gps-address {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+
+        .cardholder-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 3px solid #1a1a1a;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .expanded-text {
+            letter-spacing: 4.6px;
+            font-weight: 900;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: auto;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo .logo, .footer-logo .badge {
+            height: 25px;
+        }
+
+        .footer-logo .expanded-text {
+            letter-spacing: 3px;
+            font-size: 10px;
+        }
+
+        .footer-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        .flip-hint {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                width: 300px;
+                height: 480px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="card-container">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <!-- Front Face -->
+                <div class="card-face card-front">
+                    <div class="card-content">
+                        <div class="header">
+                            <div class="logo">
+                                <img src="ghana.png"/>
+                            </div>
+                            <div class="header-text">
+                                PUBLIC SERVICES<br>
+                                <span class="expanded-text">COMMISSION</span>
+                            </div>
+                            <div class="badge">
+                                <img src="psc.png"/>
+                            </div>
+                        </div>
+                        
+                        <div class="photo-container">
+                            <div class="photo-placeholder">
+                                <img src="img.jpg" style="width: 100%;"/>
+                            </div>
+                        </div>
+                        
+                        <div class="name">
+                            KAFUI KWEI ADIMADO
+                        </div>
+                        
+                        <div class="details">
+                            <div class="detail-row">
+                                <span class="detail-label">ID No</span>
+                                <span class="detail-value">: 123456789</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Sex</span>
+                                <span class="detail-value">: M</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wave-bottom"></div>
+                </div>
+
+                <!-- Back Face -->
+                <div class="card-face card-back">
+                    <div class="wave-top"></div>
+                    <div class="card-content back-content">
+                        <div class="back-title">TERMS AND CONDITIONS</div>
+                        
+                        <div class="terms-text">
+                            This is a property of the Office<br>
+                            of the <strong>Public Services Commission</strong>
+                        </div>
+                        
+                        <div class="terms-text office-details">
+                            If found, please return it to<br>
+                            The Secretary<br>
+                            Office of the<br>
+                            <strong>PUBLIC SERVICES COMMISSION</strong>
+                        </div>
+                        
+                        <div class="gps-address">GPS Address: GA 144 4112</div>
+                        
+                        <div class="cardholder-name">Kafui Kwei Adimado</div>
+                        
+                        <div class="qr-code">
+                            QR CODE
+                        </div>
+                        
+                        <div class="footer-logo">
+                            <div class="logo">
+                                <img src="ghana.png"/>
+                            </div>
+                            <div class="footer-text">
+                                PUBLIC SERVICES<br>
+                                <span class="expanded-text">COMMISSION</span>
+                            </div>
+                            <div class="badge">
+                                <img src="psc.png"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flip-hint">👆 Click the card to flip</div>
+    </div>
+</body>
+</html>

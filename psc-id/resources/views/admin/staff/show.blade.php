@@ -80,6 +80,14 @@
                         <dd class="mt-0.5 font-mono text-gray-800">{{ $staff->staff_id }}</dd>
                     </div>
                     <div>
+                        <dt class="text-xs text-gray-400 uppercase tracking-wide">ID No</dt>
+                        <dd class="mt-0.5 font-mono text-gray-800">{{ $staff->id_no ?? '—' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-xs text-gray-400 uppercase tracking-wide">Sex</dt>
+                        <dd class="mt-0.5 text-gray-800">{{ $staff->sex === 'M' ? 'Male' : ($staff->sex === 'F' ? 'Female' : '—') }}</dd>
+                    </div>
+                    <div>
                         <dt class="text-xs text-gray-400 uppercase tracking-wide">Department</dt>
                         <dd class="mt-0.5 text-gray-800">{{ $staff->department }}</dd>
                     </div>
@@ -94,6 +102,10 @@
                     <div>
                         <dt class="text-xs text-gray-400 uppercase tracking-wide">Email</dt>
                         <dd class="mt-0.5 text-gray-800">{{ $staff->email ?? '—' }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-xs text-gray-400 uppercase tracking-wide">Other Contacts</dt>
+                        <dd class="mt-0.5 text-gray-800">{{ $staff->other_contacts ?? '—' }}</dd>
                     </div>
                     <div>
                         <dt class="text-xs text-gray-400 uppercase tracking-wide">Date of Issue</dt>

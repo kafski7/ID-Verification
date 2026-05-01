@@ -14,10 +14,30 @@
                     @error('staff_id')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
                 <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">ID No <span class="text-red-500">*</span></label>
+                    <input type="text" name="id_no" value="{{ old('id_no') }}"
+                           placeholder="e.g. 123456789"
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('id_no') border-red-400 @enderror">
+                    @error('id_no')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
+                </div>
+            </div>
+
+            {{-- Row 2 --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
                     <input type="text" name="full_name" value="{{ old('full_name') }}"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('full_name') border-red-400 @enderror">
                     @error('full_name')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Sex <span class="text-red-500">*</span></label>
+                    <select name="sex" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('sex') border-red-400 @enderror">
+                        <option value="">— Select —</option>
+                        <option value="M" @selected(old('sex') === 'M')>Male</option>
+                        <option value="F" @selected(old('sex') === 'F')>Female</option>
+                    </select>
+                    @error('sex')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
             </div>
 
@@ -58,6 +78,15 @@
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-400 @enderror">
                     @error('email')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
+            </div>
+
+            {{-- Other Contacts --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Other Contacts</label>
+                <input type="text" name="other_contacts" value="{{ old('other_contacts') }}"
+                       placeholder="e.g. Tel: 0244000001 / alt@email.com"
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p class="mt-1 text-xs text-gray-400">Additional contact information that will appear on the printed card.</p>
             </div>
 
             {{-- Row 5 --}}

@@ -24,7 +24,7 @@ Ordered from project setup to production deployment. Work through phases sequent
 ## Phase 2 — Database & Models
 
 - [x] Create migration: `admin_users` table
-- [x] Create migration: `staff` table (uuid PK, staff_id, full_name, position, job_grade, department, phone, email, photo_path, date_of_issue, card_expires, status)
+- [x] Create migration: `staff` table (uuid PK, staff_id, id_no, full_name, sex, position, job_grade, department, phone, email, other_contacts, photo_path, date_of_issue, card_expires, status)
 - [x] Create migration: `qr_tokens` table (staff_uuid FK, nonce, issued_at, expires_at, revoked, revoked_at, revoked_by FK)
 - [x] Create migration: `scan_logs` table (token_nonce, staff_uuid, scanned_at, ip_address, user_agent, result)
 - [x] Create Eloquent model: `Staff` (UUID PK, boot-generated uuid, relationships to QrToken/ScanLog)
