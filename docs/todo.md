@@ -153,11 +153,12 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 11 — Admin User Management
 
-- [ ] Create `AdminUserController` (SUPER_ADMIN only) with: index, create, store, edit, update, deactivate
-- [ ] Create admin user list page
-- [ ] Create add/edit admin user form (name, email, password, role)
-- [ ] Implement password hashing on store/update (`bcrypt`)
-- [ ] Prevent a Super Admin from deactivating their own account
+- [x] Create `AdminUserController` (SUPER_ADMIN only) with: index, create, store, edit, update, deactivate
+- [x] Create admin user list page (role colour pills, (you) indicator, deactivate button hidden for own account)
+- [x] Create add/edit admin user forms (name, email, role, password / optional on edit)
+- [x] Implement password hashing on store/update via `hashed` cast on model (Laravel 10+)
+- [x] Prevent a Super Admin from deactivating their own account (controller guard + button hidden in view)
+- [x] Admin Users nav link in sidebar (SUPER_ADMIN only)
 
 ---
 

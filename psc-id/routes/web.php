@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -36,6 +37,11 @@ Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')
     Route::get('scan-logs', [AuditController::class, 'index'])
         ->middleware('role:HR_ADMIN,SUPER_ADMIN')
         ->name('scan-logs.index');
+
+    // Admin user management (SUPER_ADMIN only — enforced in controller constructor)
+    Route::resource('admin-users', AdminUserController::class)->except(['destroy', 'show']);
+    Route::patch('admin-users/{adminUser}/deactivate', [AdminUserController::class, 'deactivate'])
+        ->name('admin-users.deactivate');
 
     // Serve staff photos securely (never exposes the private path)
     Route::get('staff/{staff}/photo', function (\App\Models\Staff $staff) {
