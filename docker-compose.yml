@@ -1,0 +1,64 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: psc_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./psc-id:/var/www/html
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - psc_network
+    depends_on:
+      - mysql
+      - redis
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: psc_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./psc-id:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - psc_network
+    depends_on:
+      - app
+
+  mysql:
+    image: mysql:8.0
+    container_name: psc_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-psc_id}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_USER: ${DB_USERNAME:-psc_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-psc_password}
+    volumes:
+      - psc_mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - psc_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: psc_redis
+    restart: unless-stopped
+    volumes:
+      - psc_redis_data:/data
+    networks:
+      - psc_network
+
+networks:
+  psc_network:
+    driver: bridge
+
+volumes:
+  psc_mysql_data:
+  psc_redis_data:

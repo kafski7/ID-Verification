@@ -1,0 +1,184 @@
+PSC Secure QR Based Staff ID Verification System 
+1. Overview 
+This document describes the design and implementation of a secure, attack resistant QR code–based staff identity verification system for the Public Services Commission (PSC). 
+The system supports printing physical staff ID cards containing: 
+•	Staff Name 
+•	PSC Staff ID (visible) 
+•	A QR Code that, when scanned, retrieves authoritative staff details from a PSC backend system. 
+The QR Code does not embed sensitive data. It contains a secure request URL that fetches data from the server after strict verification. 
+Technology stack: PHP 8.x, MySQL, REST style API, HTTPS 
+ 
+2. Objectives 
+•	Provide instant verification of staff details via QR scan 
+•	Avoid exposing staff data inside the QR code 
+•	Prevent: 
+o	URL tampering 
+o	SQL Injection 
+o	Replay attacks 
+o	ID enumeration 
+•	Align with OWASP API Security Top 10 guidance 
+•	Keep the solution self hosted and cost free (no SaaS dependency) 
+ 
+3. High Level Architecture 
+1     [ Printed ID Card ] 
+2             | 
+3             | QR Scan 
+4             V 
+5     [ HTTPS Request URL ] 
+6             | 
+7             V 
+8     [ PHP API Gateway ] 
+9             | 
+10             | Token Validation 
+11             | Signature Verification 
+12             V 
+13     [ Staff Database ] 
+14             | 
+15             V 
+16     [ JSON Response ] 
+17      
+ 
+4. QR Code Design (Critical Security Principle) 
+4.1 What the QR Code Contains 
+✅ Allowed: 
+1     https://id.psc.gov.gh/v/verify?token=BASE64URLSTRING 
+2      
+❌ Disallowed: 
+•	Staff name 
+•	Staff ID 
+•	Position 
+•	Contact details 
+•	Sequential IDs 
+QR codes are public and reversible and must never contain sensitive information 
+ 
+5. Token Based Verification Model 
+5.1 Token Structure 
+A signed, time bound token is used: 
+1     BASE64URL( 
+2       staff_uuid | issued_at | nonce | HMAC_SHA256 
+3     ) 
+4      
+Element 	Purpose 
+staff_uuid 	Non guessable UUID (not staff number) 
+issued_at 	Token creation timestamp 
+nonce 	Prevent replay attacks 
+HMAC 	Server side signature using secret key 
+ 
+5.2 Why Not Plain IDs? 
+Sequential staff IDs enable BOLA / IDOR attacks, the #1 OWASP API risk 
+ 
+6. Database Schema (Minimum) 
+6.1 staff Table 
+1     CREATE TABLE staff ( 
+2       id INT AUTO_INCREMENT PRIMARY KEY, 
+3       uuid CHAR(36) NOT NULL UNIQUE, 
+4       staff_id VARCHAR(20) NOT NULL UNIQUE, 
+5       full_name VARCHAR(120) NOT NULL, 
+6       position VARCHAR(120) NOT NULL, 
+7       phone VARCHAR(20), 
+8       email VARCHAR(120), 
+9       status ENUM('ACTIVE','INACTIVE') DEFAULT 'ACTIVE' 
+10     ); 
+11      
+6.2 qr_tokens Table (Optional, for audit & revocation) 
+1     CREATE TABLE qr_tokens ( 
+2       id INT AUTO_INCREMENT PRIMARY KEY, 
+3       staff_uuid CHAR(36), 
+4       nonce CHAR(32), 
+5       issued_at DATETIME, 
+6       expires_at DATETIME, 
+7       used BOOLEAN DEFAULT 0 
+8     ); 
+9      
+ 
+7. API Endpoint Design 
+7.1 Endpoint 
+1     GET /v/verify?token=xxxx 
+2      
+7.2 Processing Flow 
+1.	Enforce HTTPS 
+2.	Decode token (Base64URL) 
+3.	Validate HMAC signature 
+4.	Check expiry (e.g. 1–5 years for ID cards) 
+5.	Validate staff UUID exists and is ACTIVE 
+6.	Return read only JSON response 
+ 
+8. Sample PHP Verification Logic 
+1     $token = $_GET['token'] ?? ''; 
+2     $data  = base64_decode($token, true); 
+3      
+4     if (!$data) { 
+5         http_response_code(400); 
+6         exit('Invalid token'); 
+7     } 
+8      
+9     list($uuid, $issued, $nonce, $signature) = explode('|', $data); 
+10      
+11     $expected = hash_hmac('sha256', "$uuid|$issued|$nonce", $_ENV['QR_SECRET']); 
+12      
+13     if (!hash_equals($expected, $signature)) { 
+14         http_response_code(403); 
+15         exit('Unauthorized'); 
+16     } 
+17      
+✅ hash_equals() prevents timing attacks 
+✅ Prepared statements must be used for all DB queries 
+ 
+9. Query Security 
+All database access must use prepared statements: 
+1     $stmt = $pdo->prepare( 
+2       'SELECT full_name, position, staff_id, phone, email 
+3        FROM staff WHERE uuid = :uuid AND status = "ACTIVE"' 
+4     ); 
+5     $stmt->execute(['uuid' => $uuid]); 
+6      
+This prevents SQL Injection categorically. 
+ 
+10. Response Payload (JSON) 
+1     { 
+2       "full_name": "Kafui Adimado", 
+3       "staff_id": "PSC 01452", 
+4       "position": "Senior Assistant Secretary", 
+5       "contact": { 
+6         "phone": "+233xxxxxxxx", 
+7         "email": "k.adimado@psc.gov.gh" 
+8       } 
+9     } 
+10      
+ 
+11. Security Controls Checklist 
+Control 	Status 
+HTTPS only 	✅ 
+Token signature (HMAC) 	✅ 
+UUIDs instead of IDs 	✅ 
+Prepared statements 	✅ 
+Rate limiting 	✅ 
+No data in QR 	✅ 
+Audit logging 	✅ 
+Aligned with OWASP API Security Top 10 
+ 
+12. QR Code Generation 
+Use a maintained PHP library such as: 
+•	chillerlan/php-qrcode (MIT/Apache) 
+QR codes should encode only the signed verification URL. 
+ 
+13. Deployment Notes 
+•	Host under: id.psc.gov.gh 
+•	Enforce TLS (Let’s Encrypt acceptable) 
+•	Store secrets in .env (never in repo) 
+•	Rotate QR secret only when re issuing cards 
+ 
+14. Future Enhancements 
+•	Scan analytics (geo/time anomaly detection) 
+•	Revocation of compromised cards 
+•	Visual verification page (HTML + JSON) 
+•	Offline verification watermark 
+ 
+15. Summary 
+This architecture ensures: 
+•	Strong security without complex infrastructure 
+•	Longevity of printed ID cards 
+•	Zero sensitive data exposure in QR codes 
+•	Compliance with industry best practices 
+Suitable for PSC production use with internal hosting and PHP support. 
+

@@ -1,0 +1,16 @@
+# Laravel application
+psc-id/.env
+psc-id/vendor/
+psc-id/node_modules/
+psc-id/storage/app/private/
+psc-id/storage/framework/cache/data/
+psc-id/storage/framework/sessions/
+psc-id/storage/framework/views/
+psc-id/storage/logs/
+psc-id/bootstrap/cache/*.php
+psc-id/public/build/
+psc-id/public/hot
+
+# Docker / OS
+.DS_Store
+Thumbs.db
