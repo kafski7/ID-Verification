@@ -11,13 +11,13 @@ Ordered from project setup to production deployment. Work through phases sequent
 - [x] Write `Dockerfile` for the PHP-FPM app container (PHP 8.4, pdo_mysql, gd, zip, redis PECL)
 - [x] Write `nginx.conf` for the dev environment
 - [x] Configure `.env` for Docker (DB host, Redis host, app URL, app key generated)
-- [ ] Add `.env.example` with all required keys (no real values)
+- [x] Add `.env.example` with all required keys (no real values)
 - [x] Confirm app loads at `http://localhost:8080` (`docker compose up -d` → HTTP 200)
-- [ ] Initialize a Git repository, add `.gitignore` (exclude `.env`, storage, vendor)
-- [ ] Install frontend tooling: Tailwind CSS, configure `vite.config.js`
-- [ ] Install Livewire (`livewire/livewire`)
-- [ ] Install `barryvdh/laravel-dompdf`
-- [ ] Install `chillerlan/php-qrcode`
+- [x] Initialize a Git repository, add `.gitignore`, push to GitHub (`kafski7/ID-Verification`)
+- [x] Install frontend tooling: Tailwind CSS v4 + `@tailwindcss/vite`, configured in `vite.config.js`
+- [x] Install Livewire (`livewire/livewire` v4.3.0)
+- [x] Install `barryvdh/laravel-dompdf` (v3.1.2)
+- [x] Install `chillerlan/php-qrcode` (v6.0.1)
 
 ---
 
