@@ -107,19 +107,18 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 8 — Public Verification Page
 
-- [ ] Create `VerifyController` with a `show` method
-- [ ] Register public route: `GET /v/verify?token=...`
-- [ ] In `show`: call `QrTokenService::verify()`, log the scan result to `scan_logs`
-- [ ] Create verification Blade view (`verify/show.blade.php`):
+- [x] Create `VerifyController` with a `show` method
+- [x] Register public route: `GET /verify/{token}`
+- [x] In `show`: call `QrTokenService::verify()`, log the scan result to `scan_logs`
+- [x] Create verification Blade view (`verify/show.blade.php`):
   - Mobile-first, no login required
-  - PSC branding header
-  - Staff photo (if available)
-  - Full name, staff ID, position, department
-  - Large VALID (green) / INACTIVE (red) / INVALID (red) status badge
-  - Timestamp of verification
-- [ ] Handle error states gracefully on the same view (expired, revoked, not found, tampered)
-- [ ] Ensure no stack traces or internal errors are exposed on the public page
-- [ ] Test on mobile (Chrome DevTools responsive mode)
+  - PSC branding header (Ghana coat of arms + PSC seal)
+  - Staff photo (rendered as base64 data URI from private disk)
+  - Full name, Staff ID, ID No, Position, Department, Job Grade, Status pill, Card Expires
+  - Large VALID (green) / INVALID (red) status badge
+  - Timestamp of scan
+- [x] Handle error states gracefully on the same view (revoked, not found, tampered, inactive)
+- [x] Ensure no stack traces or internal errors are exposed on the public page
 
 ---
 

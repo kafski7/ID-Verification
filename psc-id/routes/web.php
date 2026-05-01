@@ -4,10 +4,14 @@ use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QrController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::get('/', fn () => redirect()->route('login'));
+
+// Public QR verification — no auth required
+Route::get('/verify/{token}', [VerifyController::class, 'show'])->name('verify.show');
 
 Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
