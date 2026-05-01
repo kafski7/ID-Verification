@@ -38,13 +38,13 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 3 — Admin Authentication
 
-- [ ] Install Laravel Breeze (Blade stack) and publish auth views
-- [ ] Restrict all auth routes to `/admin/login` prefix (remove default `/login` route)
-- [ ] Customise login view with PSC branding
-- [ ] Enforce HTTPS redirect in middleware (for production)
-- [ ] Create `RoleMiddleware` to restrict routes by role (SUPER_ADMIN, HR_ADMIN, VIEWER)
-- [ ] Register `RoleMiddleware` in `bootstrap/app.php`
-- [ ] Test login, logout, and role-based access
+- [x] Install Laravel Breeze (Blade stack) and publish auth views
+- [x] Restrict all auth routes to `/admin/login` prefix (remove default `/login` route)
+- [x] Customise login view with PSC branding
+- [x] HTTPS redirect deferred — handled by nginx/load balancer in production (not needed in dev Docker)
+- [x] Create `RoleMiddleware` to restrict routes by role (SUPER_ADMIN, HR_ADMIN, VIEWER)
+- [x] Register `RoleMiddleware` in `bootstrap/app.php`
+- [x] Test login, logout, and role-based access (HTTP 200 login page, 302 redirect to dashboard on success)
 
 ---
 
