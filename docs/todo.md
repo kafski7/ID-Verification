@@ -141,12 +141,13 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 10 — Audit Log Viewer
 
-- [ ] Create `AuditController` with index method
-- [ ] Create audit log list page in admin with:
-  - Filters: staff name/ID, date range, result type
-  - Pagination
-  - Columns: date/time, staff name, IP address, result
-- [ ] Restrict audit log to HR_ADMIN and SUPER_ADMIN
+- [x] Create `AuditController` with index method
+- [x] Create audit log list page in admin with:
+  - Filters: staff name/ID, IP address, date range (from/to), result type
+  - Pagination (25 per page)
+  - Columns: date/time, staff name (linked to profile), staff ID, IP address, result pill
+- [x] Restrict audit log to HR_ADMIN and SUPER_ADMIN via `role` middleware
+- [x] Livewire `ScanLogList` component with reactive URL-bound filters
 
 ---
 

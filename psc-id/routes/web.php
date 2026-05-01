@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QrController;
@@ -30,6 +31,11 @@ Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')
     // ID card preview + PDF download
     Route::get('staff/{staff}/card',     [CardController::class, 'show'])->name('staff.card.show');
     Route::get('staff/{staff}/card/pdf', [CardController::class, 'pdf'])->name('staff.card.pdf');
+
+    // Audit / scan log (HR_ADMIN and SUPER_ADMIN only — enforced in middleware below)
+    Route::get('scan-logs', [AuditController::class, 'index'])
+        ->middleware('role:HR_ADMIN,SUPER_ADMIN')
+        ->name('scan-logs.index');
 
     // Serve staff photos securely (never exposes the private path)
     Route::get('staff/{staff}/photo', function (\App\Models\Staff $staff) {
