@@ -114,7 +114,7 @@ Ordered from project setup to production deployment. Work through phases sequent
   - Mobile-first, no login required
   - PSC branding header (Ghana coat of arms + PSC seal)
   - Staff photo (rendered as base64 data URI from private disk)
-  - Full name, Staff ID, ID No, Position, Department, Job Grade, Status pill, Card Expires
+  - Full name, Staff ID, ID No, Sex, Position, Department, Job Grade, Status pill, Card Expires, Other Contacts
   - Large VALID (green) / INVALID (red) status badge
   - Timestamp of scan
 - [x] Handle error states gracefully on the same view (revoked, not found, tampered, inactive)
