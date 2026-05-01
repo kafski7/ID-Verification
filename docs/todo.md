@@ -50,12 +50,12 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 4 — Admin Dashboard & Layout
 
-- [ ] Create main admin Blade layout (`layouts/admin.blade.php`) with sidebar navigation
-- [ ] Create dashboard page (`/admin/dashboard`) showing:
+- [x] Create main admin Blade layout (`layouts/admin.blade.php`) with sidebar navigation
+- [x] Create dashboard page (`/admin/dashboard`) showing:
   - Total active staff count
   - Total scans today
   - Recent scan log entries
-- [ ] Make dashboard stats dynamic (query from DB)
+- [x] Make dashboard stats dynamic (query from DB)
 
 ---
 
