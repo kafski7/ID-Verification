@@ -75,19 +75,19 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 6 — QR Token Generation
 
-- [ ] Create `QrTokenService` class with methods:
+- [x] Create `QrTokenService` class with methods:
   - `generate(Staff $staff): QrToken` — creates UUID, nonce, HMAC, stores in `qr_tokens`
   - `buildUrl(QrToken $token): string` — returns the full signed verification URL
   - `verify(string $rawToken): array` — decodes, validates HMAC, checks revocation, returns staff data
-- [ ] Store `QR_SECRET` in `.env` and access only via `config()`
-- [ ] Implement token encoding: `BASE64URL(uuid|issued_at|nonce|hmac)`
-- [ ] Implement HMAC validation using `hash_equals()` to prevent timing attacks
-- [ ] Create `QrController` with methods: show, regenerate, revoke
-- [ ] Create QR view page in admin: displays the QR image and signed URL for a staff member
-- [ ] Implement regenerate: revokes old token, generates new one
-- [ ] Implement revoke: marks token as revoked without regenerating
-- [ ] Generate QR image using `chillerlan/php-qrcode` and return as inline PNG
-- [ ] Test token generation, validation, and revocation end-to-end
+- [x] Store `QR_SECRET` in `.env` and access only via `config()`
+- [x] Implement token encoding: `BASE64URL(uuid|issued_at|nonce|hmac)`
+- [x] Implement HMAC validation using `hash_equals()` to prevent timing attacks
+- [x] Create `QrController` with methods: show, regenerate, revoke
+- [x] Create QR view page in admin: displays the QR image and signed URL for a staff member
+- [x] Implement regenerate: revokes old token, generates new one
+- [x] Implement revoke: marks token as revoked without regenerating
+- [x] Generate QR image using `chillerlan/php-qrcode` and return as inline PNG
+- [x] Test token generation, validation, and revocation end-to-end
 
 ---
 

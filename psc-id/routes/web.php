@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\QrController;
 use App\Http\Controllers\Admin\StaffController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +14,13 @@ Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')
     // Staff (read available to all authenticated roles; write restricted in controller/form request)
     Route::resource('staff', StaffController::class)->except(['destroy']);
     Route::patch('staff/{staff}/deactivate', [StaffController::class, 'deactivate'])->name('staff.deactivate');
+
+    // QR token management (nested under staff)
+    Route::prefix('staff/{staff}/qr')->name('staff.qr.')->group(function () {
+        Route::get('/',          [QrController::class, 'show'])->name('show');
+        Route::patch('/regenerate', [QrController::class, 'regenerate'])->name('regenerate');
+        Route::delete('/revoke', [QrController::class, 'revoke'])->name('revoke');
+    });
 
     // Serve staff photos securely (never exposes the private path)
     Route::get('staff/{staff}/photo', function (\App\Models\Staff $staff) {
