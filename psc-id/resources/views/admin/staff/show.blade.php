@@ -68,6 +68,28 @@
                 </a>
             </div>
             @endif
+
+            {{-- ID Card preview + PDF --}}
+            @if(Route::has('admin.staff.card.show'))
+            <div class="bg-white rounded-xl shadow-sm p-5 space-y-2">
+                <a href="{{ route('admin.staff.card.show', $staff) }}"
+                   class="flex items-center justify-center gap-2 w-full bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2"/>
+                    </svg>
+                    Preview ID Card
+                </a>
+                <a href="{{ route('admin.staff.card.pdf', $staff) }}"
+                   class="flex items-center justify-center gap-2 w-full border border-red-300 text-red-600 hover:bg-red-50 text-sm font-medium px-4 py-2 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Download PDF
+                </a>
+            </div>
+            @endif
         </div>
 
         {{-- Right: Details --}}

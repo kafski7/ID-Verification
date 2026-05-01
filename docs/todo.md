@@ -93,14 +93,15 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 7 — ID Card Print Layout
 
-- [ ] Design card front Blade view (`card-front.blade.php`):
-  - Staff photo, full name, staff ID, position, department, QR code
-  - PSC logo and branding
-- [ ] Design card back Blade view (`card-back.blade.php`):
-  - PSC contact info, card validity note, verification instructions
-- [ ] Create HTML print route (`GET /admin/staff/{uuid}/card`) — opens in browser for print
-- [ ] Create PDF download route (`GET /admin/staff/{uuid}/card/pdf`) using dompdf
-- [ ] Test print output at standard ID card dimensions (CR80: 85.6mm × 54mm)
+- [x] Design card front Blade view (`card.blade.php` — browser flip-card with 3D CSS):
+  - Staff photo, full name, Staff ID, ID No, Sex, position, department
+  - Ghana Coat of Arms + PSC logo, Montserrat font
+- [x] Design card back Blade view (back face of same `card.blade.php`):
+  - Terms text, GPS address, cardholder name, other_contacts, QR code, footer logos
+- [x] Create HTML preview route (`GET /admin/staff/{staff}/card`) — opens flip-card in browser
+- [x] Create PDF download route (`GET /admin/staff/{staff}/card/pdf`) using dompdf
+- [x] Add "Preview ID Card" and "Download PDF" buttons to staff show page
+- [x] Test print output at CR80-inspired badge dimensions (340×540px browser, 242×382pt PDF)
 
 ---
 

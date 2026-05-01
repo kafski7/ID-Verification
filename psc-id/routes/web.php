@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QrController;
 use App\Http\Controllers\Admin\StaffController;
@@ -17,10 +18,14 @@ Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')
 
     // QR token management (nested under staff)
     Route::prefix('staff/{staff}/qr')->name('staff.qr.')->group(function () {
-        Route::get('/',          [QrController::class, 'show'])->name('show');
+        Route::get('/',             [QrController::class, 'show'])->name('show');
         Route::patch('/regenerate', [QrController::class, 'regenerate'])->name('regenerate');
-        Route::delete('/revoke', [QrController::class, 'revoke'])->name('revoke');
+        Route::delete('/revoke',    [QrController::class, 'revoke'])->name('revoke');
     });
+
+    // ID card preview + PDF download
+    Route::get('staff/{staff}/card',     [CardController::class, 'show'])->name('staff.card.show');
+    Route::get('staff/{staff}/card/pdf', [CardController::class, 'pdf'])->name('staff.card.pdf');
 
     // Serve staff photos securely (never exposes the private path)
     Route::get('staff/{staff}/photo', function (\App\Models\Staff $staff) {
