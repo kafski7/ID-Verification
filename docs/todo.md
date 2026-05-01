@@ -61,15 +61,15 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ## Phase 5 — Staff Management Module
 
-- [ ] Create `StaffController` with methods: index, create, store, show, edit, update, deactivate
-- [ ] Create staff list page with search and pagination (Livewire component)
-- [ ] Create add staff form with all fields and validation (`StaffStoreRequest`)
-- [ ] Implement photo upload: validate type/size, store in `storage/app/private/photos`, generate safe filename
-- [ ] Create edit staff form with pre-populated fields (`StaffUpdateRequest`)
-- [ ] Implement deactivate action (set status to INACTIVE, do not delete)
-- [ ] Create staff detail view page
-- [ ] Restrict create/edit/deactivate to HR_ADMIN and SUPER_ADMIN roles
-- [ ] Test all CRUD operations
+- [x] Create `StaffController` with methods: index, create, store, show, edit, update, deactivate
+- [x] Create staff list page with search and pagination (Livewire component)
+- [x] Create add staff form with all fields and validation (`StaffStoreRequest`)
+- [x] Implement photo upload: validate type/size, store in `storage/app/private/photos`, generate safe filename
+- [x] Create edit staff form with pre-populated fields (`StaffUpdateRequest`)
+- [x] Implement deactivate action (set status to INACTIVE, do not delete)
+- [x] Create staff detail view page
+- [x] Restrict create/edit/deactivate to HR_ADMIN and SUPER_ADMIN roles
+- [x] Test all CRUD operations
 
 ---
 
