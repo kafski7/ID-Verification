@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-class Staff extends Model
+class Staff extends Authenticatable
 {
+    use Notifiable;
+
     protected $primaryKey = 'uuid';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -28,11 +31,20 @@ class Staff extends Model
         'date_of_issue',
         'card_expires',
         'status',
+        'password',
+        'privacy_settings',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     protected $casts = [
-        'date_of_issue' => 'date',
-        'card_expires'  => 'date',
+        'date_of_issue'    => 'date',
+        'card_expires'     => 'date',
+        'privacy_settings' => 'array',
+        'password'         => 'hashed',
     ];
 
     protected static function boot(): void
@@ -62,5 +74,10 @@ class Staff extends Model
     public function scanLogs(): HasMany
     {
         return $this->hasMany(ScanLog::class, 'staff_uuid', 'uuid');
+    }
+
+    public function privacyHides(string $field): bool
+    {
+        return (bool) (($this->privacy_settings ?? [])['hide_' . $field] ?? false);
     }
 }

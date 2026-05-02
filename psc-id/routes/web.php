@@ -6,6 +6,11 @@ use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QrController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Staff\AuthController as StaffAuthController;
+use App\Http\Controllers\Staff\ForgotPasswordController as StaffForgotPasswordController;
+use App\Http\Controllers\Staff\PrivacyController as StaffPrivacyController;
+use App\Http\Controllers\Staff\ProfileController as StaffProfileController;
+use App\Http\Controllers\Staff\ResetPasswordController as StaffResetPasswordController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -53,3 +58,36 @@ Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')
 });
 
 require __DIR__.'/auth.php';
+
+// ──────────────────────────────────────────────────────
+// Staff self-service portal
+// ──────────────────────────────────────────────────────
+Route::prefix('staff')->name('staff.')->group(function () {
+
+    // Guest-only routes (login, password reset)
+    Route::get('/login',  [StaffAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [StaffAuthController::class, 'login'])->name('login.post');
+
+    Route::get('/forgot-password',  [StaffForgotPasswordController::class, 'show'])->name('password.request');
+    Route::post('/forgot-password', [StaffForgotPasswordController::class, 'store'])->name('password.email');
+
+    Route::get('/reset-password/{token}', [StaffResetPasswordController::class, 'show'])->name('password.reset');
+    Route::post('/reset-password',        [StaffResetPasswordController::class, 'store'])->name('password.update');
+
+    // Logout (available even with stale session)
+    Route::post('/logout', [StaffAuthController::class, 'logout'])->name('logout');
+
+    // Authenticated routes
+    Route::middleware('auth:staff')->group(function () {
+        Route::get('/portal',         [StaffProfileController::class, 'show'])->name('portal');
+
+        Route::get('/profile/edit',   [StaffProfileController::class, 'editDetails'])->name('profile.edit');
+        Route::patch('/profile',      [StaffProfileController::class, 'updateDetails'])->name('profile.update');
+
+        Route::get('/password/edit',  [StaffProfileController::class, 'editPassword'])->name('password.edit');
+        Route::patch('/password',     [StaffProfileController::class, 'updatePassword'])->name('password.change');
+
+        Route::get('/privacy',        [StaffPrivacyController::class, 'edit'])->name('privacy.edit');
+        Route::patch('/privacy',      [StaffPrivacyController::class, 'update'])->name('privacy.update');
+    });
+});

@@ -225,10 +225,12 @@
             </div>
 
             <div class="details">
+                @unless($staff->privacyHides('staff_id'))
                 <div class="detail-row">
                     <span class="detail-label">Staff ID</span>
                     <span class="detail-value">{{ $staff->staff_id }}</span>
                 </div>
+                @endunless
                 @if($staff->id_no)
                 <div class="detail-row">
                     <span class="detail-label">ID No</span>
@@ -249,7 +251,7 @@
                     <span class="detail-label">Department</span>
                     <span class="detail-value">{{ $staff->department }}</span>
                 </div>
-                @if($staff->job_grade)
+                @if($staff->job_grade && !$staff->privacyHides('grade'))
                 <div class="detail-row">
                     <span class="detail-label">Grade</span>
                     <span class="detail-value">{{ $staff->job_grade }}</span>
@@ -267,19 +269,19 @@
                     <span class="detail-value">{{ \Carbon\Carbon::parse($staff->card_expires)->format('d M Y') }}</span>
                 </div>
                 @endif
-                @if($staff->phone)
+                @if($staff->phone && !$staff->privacyHides('phone'))
                 <div class="detail-row">
                     <span class="detail-label">Telephone</span>
                     <span class="detail-value">{{ $staff->phone }}</span>
                 </div>
                 @endif
-                @if($staff->email)
+                @if($staff->email && !$staff->privacyHides('email'))
                 <div class="detail-row">
                     <span class="detail-label">Email</span>
                     <span class="detail-value">{{ $staff->email }}</span>
                 </div>
                 @endif
-                @if($staff->other_contacts)
+                @if($staff->other_contacts && !$staff->privacyHides('other_contacts'))
                 <div class="detail-row">
                     <span class="detail-label">Other Contacts</span>
                     <span class="detail-value">{{ $staff->other_contacts }}</span>
