@@ -42,11 +42,17 @@
                 </a>
 
                 @if($staff->status === 'ACTIVE')
-                <form method="POST" action="{{ route('admin.staff.deactivate', $staff) }}"
-                      onsubmit="return confirm('Deactivate {{ addslashes($staff->full_name) }}? This will not delete the record.')">
+                <form id="form-deactivate-staff"
+                      method="POST" action="{{ route('admin.staff.deactivate', $staff) }}">
                     @csrf
                     @method('PATCH')
-                    <button type="submit"
+                    <button type="button"
+                            @click="$dispatch('open-confirm-modal', {
+                                title: 'Deactivate Staff',
+                                message: 'Deactivate {{ addslashes($staff->full_name) }}? This will not delete the record.',
+                                formId: 'form-deactivate-staff',
+                                confirmLabel: 'Deactivate'
+                            })"
                             class="flex items-center justify-center gap-2 w-full border border-red-300 text-red-600 hover:bg-red-50 text-sm font-medium px-4 py-2 rounded-lg transition">
                         Deactivate
                     </button>

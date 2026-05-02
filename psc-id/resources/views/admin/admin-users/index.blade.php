@@ -66,12 +66,18 @@
                                        class="text-xs text-blue-600 hover:underline">Edit</a>
 
                                     @if(! $user->is(auth()->user()) && $user->role !== 'INACTIVE')
-                                        <form method="POST"
-                                              action="{{ route('admin.admin-users.deactivate', $user) }}"
-                                              onsubmit="return confirm('Deactivate {{ addslashes($user->name) }}?')">
+                                        <form id="form-deactivate-user-{{ $user->id }}"
+                                              method="POST"
+                                              action="{{ route('admin.admin-users.deactivate', $user) }}">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit"
+                                            <button type="button"
+                                                    @click="$dispatch('open-confirm-modal', {
+                                                        title: 'Deactivate Admin User',
+                                                        message: 'Deactivate {{ addslashes($user->name) }}? They will lose access immediately.',
+                                                        formId: 'form-deactivate-user-{{ $user->id }}',
+                                                        confirmLabel: 'Deactivate'
+                                                    })"
                                                     class="text-xs text-red-500 hover:underline">
                                                 Deactivate
                                             </button>

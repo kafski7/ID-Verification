@@ -162,6 +162,36 @@ Ordered from project setup to production deployment. Work through phases sequent
 
 ---
 
+## Phase 11b — Staff Self-Service Portal
+
+### Auth
+- [ ] Create `staff` guard + `StaffLoginController` (separate from admin auth)
+- [ ] Create staff login page (`/staff/login`) — mobile-first, PSC branding
+- [ ] Add "Forgot Password" flow for staff: request form, email reset link, reset form (use Laravel's built-in password broker with `staff` guard)
+- [ ] Protect all `/staff/*` routes with `auth:staff` middleware
+- [ ] Create staff portal layout (mobile-first, sticky header with name + logout)
+
+### Profile & Settings
+- [ ] Create staff dashboard / profile page — display all current details (read-only overview)
+- [ ] Create "Edit My Details" form — editable fields: **telephone, email, other_contacts** only (not name/position/department — those are HR-managed)
+- [ ] Create "Change Password" page with current-password confirmation
+- [ ] Add `StaffProfileController` with: `show`, `editDetails`, `updateDetails`, `editPassword`, `updatePassword`
+- [ ] Validate phone format and email uniqueness (excluding own record) on update
+
+### Privacy Controls
+- [ ] Add `privacy_settings` JSON column to `staff` table (migration): keys `hide_staff_id`, `hide_grade`, `hide_phone`, `hide_email`, `hide_other_contacts` — all default `false`
+- [ ] Create "Privacy Settings" page with toggle switches for each hideable field
+- [ ] Add `PrivacySettingsController` (or merge into `StaffProfileController`) — `editPrivacy`, `updatePrivacy`
+- [ ] Update `verify/show.blade.php` to honour privacy settings: skip fields where `privacy_settings->hide_*` is `true`
+- [ ] Hideable fields: Staff ID, Grade, Telephone, Email, Other Contacts
+- [ ] Non-hideable fields (always shown on verify): Full Name, ID No, Sex, Position, Department, Card Expires, Status
+
+### Navigation
+- [ ] Add staff portal links to public verify page footer (or separate landing)
+- [ ] Ensure admin routes and staff routes are fully isolated (different guards, no cross-access)
+
+---
+
 ## Phase 12 — Security Hardening
 
 - [ ] Add global rate limiting on verification routes (Nginx `limit_req_zone`)

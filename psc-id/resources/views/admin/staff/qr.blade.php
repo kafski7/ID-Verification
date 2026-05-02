@@ -74,11 +74,17 @@
                     <div class="space-y-3">
 
                         {{-- Regenerate --}}
-                        <form method="POST" action="{{ route('admin.staff.qr.regenerate', $staff) }}"
-                              onsubmit="return confirm('This will invalidate the current QR code and generate a new one. Continue?')">
+                        <form id="form-regenerate-qr"
+                              method="POST" action="{{ route('admin.staff.qr.regenerate', $staff) }}">
                             @csrf
                             @method('PATCH')
-                            <button type="submit"
+                            <button type="button"
+                                    @click="$dispatch('open-confirm-modal', {
+                                        title: 'Regenerate QR Token',
+                                        message: 'This will invalidate the current QR code and generate a new one.',
+                                        formId: 'form-regenerate-qr',
+                                        confirmLabel: 'Regenerate'
+                                    })"
                                     class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-5 py-2.5 transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -90,11 +96,17 @@
 
                         {{-- Revoke --}}
                         @unless ($token->revoked)
-                            <form method="POST" action="{{ route('admin.staff.qr.revoke', $staff) }}"
-                                  onsubmit="return confirm('This will permanently revoke the current QR code without generating a new one. Continue?')">
+                            <form id="form-revoke-qr"
+                                  method="POST" action="{{ route('admin.staff.qr.revoke', $staff) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
+                                <button type="button"
+                                        @click="$dispatch('open-confirm-modal', {
+                                            title: 'Revoke Token',
+                                            message: 'This will permanently revoke the current QR code. The staff member cannot be verified until a new token is generated.',
+                                            formId: 'form-revoke-qr',
+                                            confirmLabel: 'Revoke'
+                                        })"
                                         class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-red-700 hover:bg-red-600 text-white text-sm font-medium px-5 py-2.5 transition">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
