@@ -48,7 +48,9 @@ class CardController extends Controller
             'ghanaDataUri',
             'pscDataUri',
             'cardBgDataUri',
-        ))->setPaper([0, 0, 242.0, 382.7], 'portrait'); // CR80 in points: 85.6mm x 54mm scaled ×2 for portrait badge
+        ))
+            ->setPaper([0, 0, 240.0, 384.0], 'portrait') // matches @page in card-pdf.blade.php
+            ->setOption(['isRemoteEnabled' => false, 'isHtml5ParserEnabled' => true]);
 
         $filename = 'psc-id-' . str_replace('/', '-', $staff->staff_id) . '.pdf';
 

@@ -3,214 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+    @page {
+        size: 240pt 384pt;
+        margin: 0;
+    }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-        font-family: "Montserrat", "DejaVu Sans", sans-serif;
-        background: #ffffff;
+    html, body {
+        width: 240pt;
+        height: 384pt;
     }
 
-    /* ── Each card side ── */
+    body {
+        font-family: "DejaVu Sans", sans-serif;
+        color: #1a1a1a;
+    }
+
     .card-side {
-        width: 242pt;
-        height: 382pt;
         position: relative;
+        width: 240pt;
+        height: 384pt;
         overflow: hidden;
         page-break-after: always;
     }
 
-    .card-side:last-child {
-        page-break-after: auto;
-    }
+    .card-side.last { page-break-after: auto; }
 
     .bg {
         position: absolute;
         top: 0; left: 0;
-        width: 100%; height: 100%;
+        width: 240pt;
+        height: 384pt;
     }
 
     .content {
-        position: relative;
-        z-index: 2;
-        height: 100%;
-        padding: 22pt;
-        display: block;
+        position: absolute;
+        top: 0; left: 0;
+        width: 240pt;
+        height: 384pt;
+        padding: 18pt 20pt;
         text-align: center;
     }
 
-    /* ── FRONT ── */
+    /* ───── HEADER (front + footer back) ───── */
     .header {
-        margin-top: 20pt;
+        text-align: center;
+        margin-top: 8pt;
         margin-bottom: 14pt;
-        display: block;
+        white-space: nowrap;
+    }
+
+    .header img {
+        height: 26pt;
+        width: 26pt;
+        vertical-align: middle;
+    }
+
+    .header .ht {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 9pt;
+        font-weight: bold;
+        line-height: 1.15;
+        margin: 0 4pt;
         text-align: center;
     }
 
-    .header-inner {
-        display: inline-block;
-        vertical-align: middle;
+    .ht .exp {
+        letter-spacing: 2.4pt;
+        font-weight: bold;
+        font-size: 9pt;
     }
 
-    .logo-img {
-        height: 25pt;
-        vertical-align: middle;
-    }
-
-    .psc-img {
-        height: 25pt;
-        vertical-align: middle;
-    }
-
-    .header-text {
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 10pt;
-        font-weight: 700;
-        color: #1a1a1a;
-        line-height: 1.3;
-        margin: 0 6pt;
-        letter-spacing: 0.4pt;
-    }
-
-    .expanded {
-        letter-spacing: 3pt;
-        font-weight: 900;
-    }
-
+    /* ───── FRONT photo ───── */
     .photo-wrap {
-        width: 90pt;
-        height: 90pt;
-        border-radius: 50%;
-        border: 3.5pt solid #0066cc;
+        width: 100pt;
+        height: 100pt;
+        border-radius: 50pt;
+        border: 4pt solid #0066cc;
         overflow: hidden;
-        margin: 0 auto 12pt;
-        background: #e8e8e8;
+        margin: 0 auto 10pt;
+        background: #f0f0f0;
     }
 
     .photo-wrap img {
-        width: 100%;
-        height: 100%;
+        width: 100pt;
+        height: 100pt;
     }
 
     .photo-placeholder {
-        width: 90pt;
-        height: 90pt;
-        border-radius: 50%;
-        border: 3.5pt solid #0066cc;
+        width: 100pt;
+        height: 100pt;
+        border-radius: 50pt;
+        border: 4pt solid #0066cc;
         background: #6a76d4;
-        margin: 0 auto 12pt;
-        font-size: 36pt;
-        font-weight: 700;
+        margin: 0 auto 10pt;
+        font-size: 40pt;
+        font-weight: bold;
         color: white;
-        line-height: 90pt;
+        line-height: 92pt;
         text-align: center;
     }
 
     .name {
         font-size: 13pt;
-        font-weight: 900;
-        color: #1a1a1a;
+        font-weight: bold;
         text-transform: uppercase;
-        text-align: center;
-        margin-bottom: 14pt;
-        line-height: 1.25;
+        margin-bottom: 12pt;
+        line-height: 1.2;
     }
 
     table.details {
-        width: 68%;
+        width: 75%;
         margin: 0 auto;
         border-collapse: collapse;
-        font-size: 8pt;
+        font-size: 9pt;
         text-align: left;
     }
 
-    table.details td { padding: 2.5pt 2pt; }
-    .dl { font-weight: 600; color: #555; width: 50pt; }
-    .dv { font-weight: 500; color: #1a1a1a; }
+    table.details td { padding: 2pt 0; }
+    .dl { font-weight: bold; color: #555; width: 60pt; }
+    .dv { color: #1a1a1a; }
 
-    /* ── BACK ── */
+    /* ───── BACK ───── */
     .back-title {
-        font-size: 10pt;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-top: 18pt;
-        margin-bottom: 12pt;
+        font-size: 11pt;
+        font-weight: bold;
+        margin-top: 4pt;
+        margin-bottom: 10pt;
     }
 
     .terms {
-        font-size: 8pt;
+        font-size: 9pt;
         color: #333;
-        line-height: 1.7;
+        line-height: 1.5;
         margin-bottom: 10pt;
     }
 
     .gps {
-        font-size: 9pt;
-        font-weight: 600;
+        font-size: 10pt;
+        font-weight: bold;
         color: #0066cc;
-        margin-bottom: 12pt;
+        margin-bottom: 10pt;
     }
 
     .cardholder {
-        font-size: 10pt;
-        font-weight: 700;
-        color: #1a1a1a;
+        font-size: 11pt;
+        font-weight: bold;
         border-bottom: 1.5pt solid #1a1a1a;
-        padding-bottom: 6pt;
-        margin-bottom: 12pt;
+        padding-bottom: 5pt;
+        margin: 0 18pt 8pt;
     }
 
     .other-contacts {
         font-size: 8pt;
-        color: #333;
-        margin-bottom: 10pt;
+        color: #555;
+        margin-bottom: 6pt;
     }
 
     .qr-img {
-        width: 80pt;
-        height: 80pt;
-        border: 2pt solid #1a1a1a;
-        margin: 0 auto 12pt;
+        width: 90pt;
+        height: 90pt;
+        margin: 4pt auto 8pt;
         display: block;
+        border: 2pt solid #1a1a1a;
     }
 
     .footer {
-        margin-top: 6pt;
+        text-align: center;
+        margin-top: 4pt;
+        white-space: nowrap;
     }
 
-    .footer-logo-img { height: 18pt; vertical-align: middle; }
-    .footer-psc-img  { height: 18pt; vertical-align: middle; }
+    .footer img {
+        height: 20pt;
+        width: 20pt;
+        vertical-align: middle;
+    }
 
-    .footer-text {
+    .footer .ft {
         display: inline-block;
         vertical-align: middle;
         font-size: 8pt;
-        font-weight: 700;
-        color: #1a1a1a;
-        line-height: 1.3;
-        margin: 0 5pt;
+        font-weight: bold;
+        line-height: 1.15;
+        margin: 0 3pt;
+        text-align: center;
     }
 
-    .footer-expanded { letter-spacing: 2pt; font-weight: 900; }
+    .ft .exp {
+        letter-spacing: 1.8pt;
+        font-weight: bold;
+    }
 </style>
 </head>
 <body>
 
-{{-- ══════════════════════════ FRONT ══════════════════════════ --}}
+{{-- ══════════════════ FRONT ══════════════════ --}}
 <div class="card-side">
     <img class="bg" src="{{ $cardBgDataUri }}" alt="">
     <div class="content">
 
         <div class="header">
-            <img class="logo-img" src="{{ $ghanaDataUri }}" alt="Ghana Coat of Arms">
-            <span class="header-text">PUBLIC SERVICES<br><span class="expanded">COMMISSION</span></span>
-            <img class="psc-img" src="{{ $pscDataUri }}" alt="PSC">
+            <img src="{{ $ghanaDataUri }}" alt="">
+            <span class="ht">PUBLIC SERVICES<br><span class="exp">COMMISSION</span></span>
+            <img src="{{ $pscDataUri }}" alt="">
         </div>
 
         @if($photoDataUri)
-            <div class="photo-wrap"><img src="{{ $photoDataUri }}" alt="Photo"></div>
+            <div class="photo-wrap"><img src="{{ $photoDataUri }}" alt=""></div>
         @else
             <div class="photo-placeholder">{{ strtoupper(substr($staff->full_name, 0, 1)) }}</div>
         @endif
@@ -218,33 +220,18 @@
         <div class="name">{{ $staff->full_name }}</div>
 
         <table class="details">
-            <tr>
-                <td class="dl">Staff ID</td>
-                <td class="dv">: {{ $staff->staff_id }}</td>
-            </tr>
-            <tr>
-                <td class="dl">ID No</td>
-                <td class="dv">: {{ $staff->id_no ?? '—' }}</td>
-            </tr>
-            <tr>
-                <td class="dl">Sex</td>
-                <td class="dv">: {{ $staff->sex ?? '—' }}</td>
-            </tr>
-            <tr>
-                <td class="dl">Position</td>
-                <td class="dv">: {{ $staff->position }}</td>
-            </tr>
-            <tr>
-                <td class="dl">Department</td>
-                <td class="dv">: {{ $staff->department }}</td>
-            </tr>
+            <tr><td class="dl">Staff ID</td><td class="dv">: {{ $staff->staff_id }}</td></tr>
+            <tr><td class="dl">ID No</td><td class="dv">: {{ $staff->id_no ?? '—' }}</td></tr>
+            <tr><td class="dl">Sex</td><td class="dv">: {{ $staff->sex ?? '—' }}</td></tr>
+            <tr><td class="dl">Position</td><td class="dv">: {{ $staff->position }}</td></tr>
+            <tr><td class="dl">Department</td><td class="dv">: {{ $staff->department }}</td></tr>
         </table>
 
     </div>
 </div>
 
-{{-- ══════════════════════════ BACK ══════════════════════════ --}}
-<div class="card-side">
+{{-- ══════════════════ BACK ══════════════════ --}}
+<div class="card-side last">
     <img class="bg" src="{{ $cardBgDataUri }}" alt="">
     <div class="content">
 
@@ -257,8 +244,7 @@
 
         <div class="terms">
             If found, please return it to<br>
-            The Secretary<br>
-            Office of the<br>
+            The Secretary, Office of the<br>
             <strong>PUBLIC SERVICES COMMISSION</strong>
         </div>
 
@@ -270,12 +256,12 @@
             <div class="other-contacts">{{ $staff->other_contacts }}</div>
         @endif
 
-        <img class="qr-img" src="{{ $qrDataUri }}" alt="QR Code">
+        <img class="qr-img" src="{{ $qrDataUri }}" alt="QR">
 
         <div class="footer">
-            <img class="footer-logo-img" src="{{ $ghanaDataUri }}" alt="Ghana Coat of Arms">
-            <span class="footer-text">PUBLIC SERVICES<br><span class="footer-expanded">COMMISSION</span></span>
-            <img class="footer-psc-img" src="{{ $pscDataUri }}" alt="PSC">
+            <img src="{{ $ghanaDataUri }}" alt="">
+            <span class="ft">PUBLIC SERVICES<br><span class="exp">COMMISSION</span></span>
+            <img src="{{ $pscDataUri }}" alt="">
         </div>
 
     </div>

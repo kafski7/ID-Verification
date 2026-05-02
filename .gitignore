@@ -14,3 +14,5 @@ psc-id/public/hot
 # Docker / OS
 .DS_Store
 Thumbs.db
+
+test-card.pdf
