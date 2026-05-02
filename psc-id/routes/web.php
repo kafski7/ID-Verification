@@ -38,10 +38,12 @@ Route::middleware(['auth', 'role:VIEWER,HR_ADMIN,SUPER_ADMIN'])->prefix('admin')
         ->middleware('role:HR_ADMIN,SUPER_ADMIN')
         ->name('scan-logs.index');
 
-    // Admin user management (SUPER_ADMIN only — enforced in controller constructor)
-    Route::resource('admin-users', AdminUserController::class)->except(['destroy', 'show']);
-    Route::patch('admin-users/{adminUser}/deactivate', [AdminUserController::class, 'deactivate'])
-        ->name('admin-users.deactivate');
+    // Admin user management (SUPER_ADMIN only)
+    Route::middleware('role:SUPER_ADMIN')->group(function () {
+        Route::resource('admin-users', AdminUserController::class)->except(['destroy', 'show']);
+        Route::patch('admin-users/{adminUser}/deactivate', [AdminUserController::class, 'deactivate'])
+            ->name('admin-users.deactivate');
+    });
 
     // Serve staff photos securely (never exposes the private path)
     Route::get('staff/{staff}/photo', function (\App\Models\Staff $staff) {

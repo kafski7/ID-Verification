@@ -10,6 +10,7 @@ services:
     volumes:
       - ./psc-id:/var/www/html
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./docker/php/zz-pool.conf:/usr/local/etc/php-fpm.d/zz-pool.conf
     networks:
       - psc_network
     depends_on:

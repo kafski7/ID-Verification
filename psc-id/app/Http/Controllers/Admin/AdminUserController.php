@@ -11,12 +11,6 @@ use Illuminate\View\View;
 
 class AdminUserController extends Controller
 {
-    public function __construct()
-    {
-        // All methods in this controller are SUPER_ADMIN only
-        $this->middleware('role:SUPER_ADMIN');
-    }
-
     public function index(): View
     {
         $users = AdminUser::orderBy('name')->paginate(20);
