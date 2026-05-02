@@ -1,6 +1,4 @@
-<x-admin-layout>
-    <x-slot:title>Admin Users</x-slot:title>
-    <x-slot:heading>Admin Users</x-slot:heading>
+<x-layouts.admin heading="Admin Users" subheading="Manage portal accounts and roles">
 
     @if(session('success'))
         <div class="mb-5 px-4 py-3 bg-green-50 border border-green-200 text-green-700 rounded-lg text-sm">
@@ -93,4 +91,4 @@
             </div>
         @endif
     </div>
-</x-admin-layout>
+</x-layouts.admin>

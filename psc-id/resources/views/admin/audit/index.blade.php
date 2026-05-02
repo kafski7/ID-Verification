@@ -1,6 +1,4 @@
-<x-admin-layout>
-    <x-slot:title>Scan Logs</x-slot:title>
-    <x-slot:heading>Scan Logs</x-slot:heading>
+<x-layouts.admin heading="Scan Logs" subheading="Verification activity audit trail">
 
     <livewire:admin.scan-log-list />
-</x-admin-layout>
+</x-layouts.admin>

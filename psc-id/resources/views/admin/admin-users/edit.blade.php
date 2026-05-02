@@ -1,6 +1,4 @@
-<x-admin-layout>
-    <x-slot:title>Edit Admin User</x-slot:title>
-    <x-slot:heading>Edit Admin User</x-slot:heading>
+<x-layouts.admin :heading="'Edit: ' . $adminUser->name" subheading="Update account details">
 
     <div class="max-w-lg">
         <div class="bg-white rounded-xl shadow-sm p-6">
@@ -65,4 +63,4 @@
             </form>
         </div>
     </div>
-</x-admin-layout>
+</x-layouts.admin>

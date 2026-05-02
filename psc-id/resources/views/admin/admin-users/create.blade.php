@@ -1,6 +1,4 @@
-<x-admin-layout>
-    <x-slot:title>Add Admin User</x-slot:title>
-    <x-slot:heading>Add Admin User</x-slot:heading>
+<x-layouts.admin heading="Add Admin User" subheading="Create a new portal account">
 
     <div class="max-w-lg">
         <div class="bg-white rounded-xl shadow-sm p-6">
@@ -62,4 +60,4 @@
             </form>
         </div>
     </div>
-</x-admin-layout>
+</x-layouts.admin>
