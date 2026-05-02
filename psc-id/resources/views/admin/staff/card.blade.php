@@ -209,7 +209,7 @@
     <div class="controls">
         <a href="{{ route('admin.staff.show', $staff) }}" class="btn btn-back">&larr; Back to Profile</a>
         <button onclick="document.getElementById('card').classList.toggle('flipped')" class="btn btn-white">Flip Card</button>
-        <a href="{{ route('admin.staff.card.pdf', $staff) }}" class="btn btn-pdf">⬇ Download PDF</a>
+        <button onclick="downloadCardPDF()" class="btn btn-pdf" id="btn-pdf">⬇ Download PDF</button>
         <button onclick="downloadCardImage('front')" class="btn btn-img">⬇ Front Image</button>
         <button onclick="downloadCardImage('back')" class="btn btn-img">⬇ Back Image</button>
     </div>
@@ -360,25 +360,63 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
     <script>
         const staffSlug = '{{ str_replace('/', '-', $staff->staff_id) }}';
+        const CARD_W = 340;
+        const CARD_H = 540;
+
+        async function captureCard(side) {
+            const el = document.getElementById('capture-' + side);
+            return html2canvas(el, {
+                scale: 3,
+                useCORS: true,
+                allowTaint: false,
+                backgroundColor: null,
+                logging: false,
+            });
+        }
+
+        async function downloadCardPDF() {
+            const btn = document.getElementById('btn-pdf');
+            const origText = btn.textContent;
+            btn.textContent = 'Generating…';
+            btn.disabled = true;
+
+            try {
+                const [frontCanvas, backCanvas] = await Promise.all([
+                    captureCard('front'),
+                    captureCard('back'),
+                ]);
+
+                const { jsPDF } = window.jspdf;
+                // Page size matches the card pixel dimensions (1 pt = 1 px here)
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'px',
+                    format: [CARD_W, CARD_H],
+                    hotfixes: ['px_scaling'],
+                });
+
+                pdf.addImage(frontCanvas.toDataURL('image/png'), 'PNG', 0, 0, CARD_W, CARD_H);
+                pdf.addPage([CARD_W, CARD_H], 'portrait');
+                pdf.addImage(backCanvas.toDataURL('image/png'), 'PNG', 0, 0, CARD_W, CARD_H);
+
+                pdf.save(`psc-id-${staffSlug}.pdf`);
+            } finally {
+                btn.textContent = origText;
+                btn.disabled = false;
+            }
+        }
 
         async function downloadCardImage(side) {
-            const el = document.getElementById('capture-' + side);
             const btn = document.querySelector(`button[onclick="downloadCardImage('${side}')"]`);
             const origText = btn.textContent;
             btn.textContent = 'Generating…';
             btn.disabled = true;
 
             try {
-                const canvas = await html2canvas(el, {
-                    scale: 3,            // 3× resolution for print quality
-                    useCORS: true,
-                    allowTaint: false,
-                    backgroundColor: null,
-                    logging: false,
-                });
-
+                const canvas = await captureCard(side);
                 const a = document.createElement('a');
                 a.download = `psc-id-${staffSlug}-${side}.png`;
                 a.href = canvas.toDataURL('image/png');
