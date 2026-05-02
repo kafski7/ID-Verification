@@ -19,11 +19,11 @@ class PrivacyController extends Controller
 
         $staff->update([
             'privacy_settings' => [
-                'hide_staff_id'       => $request->boolean('hide_staff_id'),
-                'hide_grade'          => $request->boolean('hide_grade'),
-                'hide_phone'          => $request->boolean('hide_phone'),
-                'hide_email'          => $request->boolean('hide_email'),
-                'hide_other_contacts' => $request->boolean('hide_other_contacts'),
+                'hide_staff_id'       => !$request->boolean('show_staff_id'),
+                'hide_grade'          => !$request->boolean('show_grade'),
+                'hide_phone'          => !$request->boolean('show_phone'),
+                'hide_email'          => !$request->boolean('show_email'),
+                'hide_other_contacts' => !$request->boolean('show_other_contacts'),
             ],
         ]);
 
