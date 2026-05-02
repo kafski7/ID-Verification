@@ -241,24 +241,12 @@
 
                     <div class="details">
                         <div class="detail-row">
-                            <span class="detail-label">Staff ID</span>
-                            <span class="detail-value">: {{ $staff->staff_id }}</span>
-                        </div>
-                        <div class="detail-row">
                             <span class="detail-label">ID No</span>
                             <span class="detail-value">: {{ $staff->id_no ?? '—' }}</span>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Sex</span>
                             <span class="detail-value">: {{ $staff->sex ?? '—' }}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Position</span>
-                            <span class="detail-value">: {{ $staff->position }}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Dept</span>
-                            <span class="detail-value">: {{ $staff->department }}</span>
                         </div>
                     </div>
                 </div>
@@ -284,12 +272,6 @@
                     <div class="gps-address">GPS Address: GA 144 4112</div>
 
                     <div class="cardholder-name">{{ $staff->full_name }}</div>
-
-                    @if($staff->other_contacts)
-                        <div class="terms-text" style="margin-bottom:12px;font-size:11px;">
-                            {{ $staff->other_contacts }}
-                        </div>
-                    @endif
 
                     <div class="qr-code">
                         <img src="{{ $qrDataUri }}" alt="QR Code">
@@ -330,11 +312,8 @@
             </div>
             <div class="name">{{ $staff->full_name }}</div>
             <div class="details">
-                <div class="detail-row"><span class="detail-label">Staff ID</span><span class="detail-value">: {{ $staff->staff_id }}</span></div>
                 <div class="detail-row"><span class="detail-label">ID No</span><span class="detail-value">: {{ $staff->id_no ?? '—' }}</span></div>
                 <div class="detail-row"><span class="detail-label">Sex</span><span class="detail-value">: {{ $staff->sex ?? '—' }}</span></div>
-                <div class="detail-row"><span class="detail-label">Position</span><span class="detail-value">: {{ $staff->position }}</span></div>
-                <div class="detail-row"><span class="detail-label">Dept</span><span class="detail-value">: {{ $staff->department }}</span></div>
             </div>
         </div>
     </div>
@@ -347,9 +326,6 @@
             <div class="terms-text office-details">If found, please return it to<br>The Secretary<br>Office of the<br><strong>PUBLIC SERVICES COMMISSION</strong></div>
             <div class="gps-address">GPS Address: GA 144 4112</div>
             <div class="cardholder-name">{{ $staff->full_name }}</div>
-            @if($staff->other_contacts)
-                <div class="terms-text" style="margin-bottom:12px;font-size:11px;">{{ $staff->other_contacts }}</div>
-            @endif
             <div class="qr-code"><img src="{{ $qrDataUri }}" alt=""></div>
             <div class="footer-logo">
                 <div class="logo"><img src="{{ asset('img/card/ghana.png') }}" alt=""></div>

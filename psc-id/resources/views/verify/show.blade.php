@@ -267,6 +267,18 @@
                     <span class="detail-value">{{ \Carbon\Carbon::parse($staff->card_expires)->format('d M Y') }}</span>
                 </div>
                 @endif
+                @if($staff->phone)
+                <div class="detail-row">
+                    <span class="detail-label">Telephone</span>
+                    <span class="detail-value">{{ $staff->phone }}</span>
+                </div>
+                @endif
+                @if($staff->email)
+                <div class="detail-row">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ $staff->email }}</span>
+                </div>
+                @endif
                 @if($staff->other_contacts)
                 <div class="detail-row">
                     <span class="detail-label">Other Contacts</span>
