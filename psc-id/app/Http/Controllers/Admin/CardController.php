@@ -41,6 +41,9 @@ class CardController extends Controller
         $pscDataUri      = $this->assetDataUri(public_path('img/card/psc.png'));
         $cardBgDataUri   = $this->assetDataUri(public_path('img/card/card-bg.png'));
 
+        // Local font dir for dompdf @font-face
+        $fontDir = storage_path('fonts');
+
         $pdf = Pdf::loadView('admin.staff.card-pdf', compact(
             'staff',
             'qrDataUri',
@@ -48,9 +51,10 @@ class CardController extends Controller
             'ghanaDataUri',
             'pscDataUri',
             'cardBgDataUri',
+            'fontDir',
         ))
             ->setPaper([0, 0, 240.0, 384.0], 'portrait') // matches @page in card-pdf.blade.php
-            ->setOption(['isRemoteEnabled' => false, 'isHtml5ParserEnabled' => true]);
+            ->setOption(['isRemoteEnabled' => true, 'isHtml5ParserEnabled' => true, 'isFontSubsettingEnabled' => true]);
 
         $filename = 'psc-id-' . str_replace('/', '-', $staff->staff_id) . '.pdf';
 

@@ -3,6 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <style>
+    @font-face {
+        font-family: 'Montserrat';
+        font-weight: 400;
+        font-style: normal;
+        src: url('{{ $fontDir }}/Montserrat-Regular.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'Montserrat';
+        font-weight: 500;
+        font-style: normal;
+        src: url('{{ $fontDir }}/Montserrat-Medium.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'Montserrat';
+        font-weight: 600;
+        font-style: normal;
+        src: url('{{ $fontDir }}/Montserrat-SemiBold.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'Montserrat';
+        font-weight: 700;
+        font-style: normal;
+        src: url('{{ $fontDir }}/Montserrat-Bold.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'Montserrat';
+        font-weight: 800;
+        font-style: normal;
+        src: url('{{ $fontDir }}/Montserrat-ExtraBold.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'Montserrat';
+        font-weight: 900;
+        font-style: normal;
+        src: url('{{ $fontDir }}/Montserrat-Black.ttf') format('truetype');
+    }
+
     @page {
         size: 240pt 384pt;
         margin: 0;
@@ -16,8 +53,9 @@
     }
 
     body {
-        font-family: "DejaVu Sans", sans-serif;
+        font-family: 'Montserrat', 'DejaVu Sans', sans-serif;
         color: #1a1a1a;
+        font-weight: 500;
     }
 
     .card-side {
@@ -42,115 +80,111 @@
         top: 0; left: 0;
         width: 240pt;
         height: 384pt;
-        padding: 18pt 20pt;
+        padding: 18pt 16pt;
         text-align: center;
     }
 
-    /* ───── HEADER (front + footer back) ───── */
-    .header {
+    /* ───── HEADER ───── */
+    .header-tbl {
+        margin: 8pt auto 12pt;
+        border-collapse: collapse;
+    }
+
+    .header-tbl td {
+        vertical-align: middle;
+        padding: 0 4pt;
+    }
+
+    .logo-cell img { width: 26pt; height: 26pt; display: block; }
+
+    .header-text {
+        font-size: 9pt;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: 0.3pt;
+        color: #1a1a1a;
         text-align: center;
-        margin-top: 8pt;
-        margin-bottom: 14pt;
         white-space: nowrap;
     }
 
-    .header img {
-        height: 26pt;
-        width: 26pt;
-        vertical-align: middle;
-    }
-
-    .header .ht {
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 9pt;
-        font-weight: bold;
-        line-height: 1.15;
-        margin: 0 4pt;
-        text-align: center;
-    }
-
-    .ht .exp {
-        letter-spacing: 2.4pt;
-        font-weight: bold;
-        font-size: 9pt;
+    .header-text .exp {
+        letter-spacing: 2.6pt;
+        font-weight: 900;
     }
 
     /* ───── FRONT photo ───── */
     .photo-wrap {
-        width: 100pt;
-        height: 100pt;
-        border-radius: 50pt;
+        width: 96pt;
+        height: 96pt;
+        border-radius: 48pt;
         border: 4pt solid #0066cc;
         overflow: hidden;
         margin: 0 auto 10pt;
         background: #f0f0f0;
     }
 
-    .photo-wrap img {
-        width: 100pt;
-        height: 100pt;
-    }
+    .photo-wrap img { width: 96pt; height: 96pt; }
 
     .photo-placeholder {
-        width: 100pt;
-        height: 100pt;
-        border-radius: 50pt;
+        width: 96pt;
+        height: 96pt;
+        border-radius: 48pt;
         border: 4pt solid #0066cc;
         background: #6a76d4;
         margin: 0 auto 10pt;
-        font-size: 40pt;
-        font-weight: bold;
+        font-size: 38pt;
+        font-weight: 700;
         color: white;
-        line-height: 92pt;
+        line-height: 88pt;
         text-align: center;
     }
 
     .name {
         font-size: 13pt;
-        font-weight: bold;
+        font-weight: 900;
         text-transform: uppercase;
         margin-bottom: 12pt;
         line-height: 1.2;
+        letter-spacing: 0.2pt;
     }
 
     table.details {
-        width: 75%;
         margin: 0 auto;
         border-collapse: collapse;
-        font-size: 9pt;
+        font-size: 8.5pt;
         text-align: left;
     }
 
     table.details td { padding: 2pt 0; }
-    .dl { font-weight: bold; color: #555; width: 60pt; }
-    .dv { color: #1a1a1a; }
+    .dl { font-weight: 600; color: #555; padding-right: 6pt !important; }
+    .dv { font-weight: 500; color: #1a1a1a; }
 
     /* ───── BACK ───── */
     .back-title {
         font-size: 11pt;
-        font-weight: bold;
-        margin-top: 4pt;
-        margin-bottom: 10pt;
+        font-weight: 700;
+        margin-top: 10pt;
+        margin-bottom: 12pt;
     }
 
     .terms {
-        font-size: 9pt;
+        font-size: 8.5pt;
         color: #333;
-        line-height: 1.5;
+        line-height: 1.55;
         margin-bottom: 10pt;
+        font-weight: 500;
     }
 
     .gps {
-        font-size: 10pt;
-        font-weight: bold;
+        font-size: 9pt;
+        font-weight: 600;
         color: #0066cc;
-        margin-bottom: 10pt;
+        margin-bottom: 12pt;
     }
 
     .cardholder {
         font-size: 11pt;
-        font-weight: bold;
+        font-weight: 700;
         border-bottom: 1.5pt solid #1a1a1a;
         padding-bottom: 5pt;
         margin: 0 18pt 8pt;
@@ -163,38 +197,36 @@
     }
 
     .qr-img {
-        width: 90pt;
-        height: 90pt;
-        margin: 4pt auto 8pt;
+        width: 86pt;
+        height: 86pt;
+        margin: 4pt auto 10pt;
         display: block;
         border: 2pt solid #1a1a1a;
     }
 
-    .footer {
+    .footer-tbl {
+        margin: 4pt auto 0;
+        border-collapse: collapse;
+    }
+
+    .footer-tbl td {
+        vertical-align: middle;
+        padding: 0 3pt;
+    }
+
+    .footer-logo-cell img { width: 20pt; height: 20pt; display: block; }
+
+    .footer-text {
+        font-size: 7.5pt;
+        font-weight: 700;
+        line-height: 1.15;
         text-align: center;
-        margin-top: 4pt;
         white-space: nowrap;
     }
 
-    .footer img {
-        height: 20pt;
-        width: 20pt;
-        vertical-align: middle;
-    }
-
-    .footer .ft {
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 8pt;
-        font-weight: bold;
-        line-height: 1.15;
-        margin: 0 3pt;
-        text-align: center;
-    }
-
-    .ft .exp {
+    .footer-text .exp {
         letter-spacing: 1.8pt;
-        font-weight: bold;
+        font-weight: 900;
     }
 </style>
 </head>
@@ -205,11 +237,13 @@
     <img class="bg" src="{{ $cardBgDataUri }}" alt="">
     <div class="content">
 
-        <div class="header">
-            <img src="{{ $ghanaDataUri }}" alt="">
-            <span class="ht">PUBLIC SERVICES<br><span class="exp">COMMISSION</span></span>
-            <img src="{{ $pscDataUri }}" alt="">
-        </div>
+        <table class="header-tbl">
+            <tr>
+                <td class="logo-cell"><img src="{{ $ghanaDataUri }}" alt=""></td>
+                <td><div class="header-text">PUBLIC SERVICES<br><span class="exp">COMMISSION</span></div></td>
+                <td class="logo-cell"><img src="{{ $pscDataUri }}" alt=""></td>
+            </tr>
+        </table>
 
         @if($photoDataUri)
             <div class="photo-wrap"><img src="{{ $photoDataUri }}" alt=""></div>
@@ -258,11 +292,13 @@
 
         <img class="qr-img" src="{{ $qrDataUri }}" alt="QR">
 
-        <div class="footer">
-            <img src="{{ $ghanaDataUri }}" alt="">
-            <span class="ft">PUBLIC SERVICES<br><span class="exp">COMMISSION</span></span>
-            <img src="{{ $pscDataUri }}" alt="">
-        </div>
+        <table class="footer-tbl">
+            <tr>
+                <td class="footer-logo-cell"><img src="{{ $ghanaDataUri }}" alt=""></td>
+                <td><div class="footer-text">PUBLIC SERVICES<br><span class="exp">COMMISSION</span></div></td>
+                <td class="footer-logo-cell"><img src="{{ $pscDataUri }}" alt=""></td>
+            </tr>
+        </table>
 
     </div>
 </div>

@@ -184,8 +184,24 @@
         .btn-white  { background: white; color: #1a1a1a; }
         .btn-pdf    { background: #ef4444; color: white; }
         .btn-back   { background: rgba(255,255,255,.2); color: white; border: 1px solid rgba(255,255,255,.4); }
+        .btn-img    { background: #10b981; color: white; }
 
         .flip-hint { color: rgba(255,255,255,.8); font-size: 13px; }
+
+        /* ── Off-screen flat card faces for image capture ── */
+        .capture-face {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+            width: 340px;
+            height: 540px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .capture-face .card-content {
+            border-radius: 0;
+        }
     </style>
 </head>
 <body>
@@ -194,6 +210,8 @@
         <a href="{{ route('admin.staff.show', $staff) }}" class="btn btn-back">&larr; Back to Profile</a>
         <button onclick="document.getElementById('card').classList.toggle('flipped')" class="btn btn-white">Flip Card</button>
         <a href="{{ route('admin.staff.card.pdf', $staff) }}" class="btn btn-pdf">⬇ Download PDF</a>
+        <button onclick="downloadCardImage('front')" class="btn btn-img">⬇ Front Image</button>
+        <button onclick="downloadCardImage('back')" class="btn btn-img">⬇ Back Image</button>
     </div>
 
     <div class="card-container">
@@ -292,6 +310,85 @@
     </div>
 
     <p class="flip-hint">Click the card or use the button above to flip</p>
+
+    {{-- ── Off-screen flat card faces used by html2canvas ── --}}
+
+    {{-- FRONT capture target --}}
+    <div id="capture-front" class="capture-face" aria-hidden="true">
+        <div class="card-content">
+            <div class="header">
+                <div class="logo"><img src="{{ asset('img/card/ghana.png') }}" alt=""></div>
+                <div class="header-text">PUBLIC SERVICES<br><span class="expanded-text">COMMISSION</span></div>
+                <div class="badge"><img src="{{ asset('img/card/psc.png') }}" alt=""></div>
+            </div>
+            <div class="photo-container">
+                @if($photoDataUri)
+                    <img src="{{ $photoDataUri }}" alt="">
+                @else
+                    <div class="photo-placeholder">{{ strtoupper(substr($staff->full_name, 0, 1)) }}</div>
+                @endif
+            </div>
+            <div class="name">{{ $staff->full_name }}</div>
+            <div class="details">
+                <div class="detail-row"><span class="detail-label">Staff ID</span><span class="detail-value">: {{ $staff->staff_id }}</span></div>
+                <div class="detail-row"><span class="detail-label">ID No</span><span class="detail-value">: {{ $staff->id_no ?? '—' }}</span></div>
+                <div class="detail-row"><span class="detail-label">Sex</span><span class="detail-value">: {{ $staff->sex ?? '—' }}</span></div>
+                <div class="detail-row"><span class="detail-label">Position</span><span class="detail-value">: {{ $staff->position }}</span></div>
+                <div class="detail-row"><span class="detail-label">Dept</span><span class="detail-value">: {{ $staff->department }}</span></div>
+            </div>
+        </div>
+    </div>
+
+    {{-- BACK capture target --}}
+    <div id="capture-back" class="capture-face" aria-hidden="true">
+        <div class="card-content back-content">
+            <div class="back-title">TERMS AND CONDITIONS</div>
+            <div class="terms-text">This is a property of the Office<br>of the <strong>Public Services Commission</strong></div>
+            <div class="terms-text office-details">If found, please return it to<br>The Secretary<br>Office of the<br><strong>PUBLIC SERVICES COMMISSION</strong></div>
+            <div class="gps-address">GPS Address: GA 144 4112</div>
+            <div class="cardholder-name">{{ $staff->full_name }}</div>
+            @if($staff->other_contacts)
+                <div class="terms-text" style="margin-bottom:12px;font-size:11px;">{{ $staff->other_contacts }}</div>
+            @endif
+            <div class="qr-code"><img src="{{ $qrDataUri }}" alt=""></div>
+            <div class="footer-logo">
+                <div class="logo"><img src="{{ asset('img/card/ghana.png') }}" alt=""></div>
+                <div class="footer-text">PUBLIC SERVICES<br><span class="expanded-text">COMMISSION</span></div>
+                <div class="badge"><img src="{{ asset('img/card/psc.png') }}" alt=""></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        const staffSlug = '{{ str_replace('/', '-', $staff->staff_id) }}';
+
+        async function downloadCardImage(side) {
+            const el = document.getElementById('capture-' + side);
+            const btn = document.querySelector(`button[onclick="downloadCardImage('${side}')"]`);
+            const origText = btn.textContent;
+            btn.textContent = 'Generating…';
+            btn.disabled = true;
+
+            try {
+                const canvas = await html2canvas(el, {
+                    scale: 3,            // 3× resolution for print quality
+                    useCORS: true,
+                    allowTaint: false,
+                    backgroundColor: null,
+                    logging: false,
+                });
+
+                const a = document.createElement('a');
+                a.download = `psc-id-${staffSlug}-${side}.png`;
+                a.href = canvas.toDataURL('image/png');
+                a.click();
+            } finally {
+                btn.textContent = origText;
+                btn.disabled = false;
+            }
+        }
+    </script>
 
 </body>
 </html>
